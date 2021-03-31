@@ -1,0 +1,20 @@
+{
+  "name": "discord-chat-exporter",
+  "version": "1.0.0",
+  "description": "Discord chat exporter",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "discord",
+    "exporter",
+    "discord-exporter",
+    "discord-chat-exporter"
+  ],
+  "author": "MajorGamerJay",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^12.5.1"
+  }
+}
