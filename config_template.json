@@ -1,4 +1,6 @@
 {
-		"token": ""
-		"channelID": ""
+		"token": "",
+		"channelID": "",
+		"export_type": "json",
+		"export_to": "output/messages.json"
 }

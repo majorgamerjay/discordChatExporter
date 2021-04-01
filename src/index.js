@@ -3,30 +3,39 @@
 // Major thanks to Crystal and Mishti who solved the rate limit problem for me
 
 const Discord = require('discord.js');
+
 const fs = require('fs');
 
 const Bot = new Discord.Client();
 const config = require('./config.json');
 
 const channelId = config.channelID;
-const messageHistory = new Array();
+
+if (config.export_type == "json") {
+		console.log(`Export type: JSON`);
+		var messageHistory = new Array();
+}
+
+else {
+		console.log(`Export type: md`);
+		var messageHistory = '';
+}
 
 let recursionMeter = 0;
 
-class AuthorStructure {
+class AuthorStructureInJSON {
 		constructor(message) {
 				this.name = `${message.author.username}#${message.author.discriminator}`;
 				this.avatar = message.author.displayAvatarURL();
 		}
 }
 
-class MessageStructure {
+class MessageStructureInJSON {
 		constructor(message) {
-				this.author = new AuthorStructure(message);
+				this.author = new AuthorStructureInJSON(message);
 				this.content = message.content;
 
-				this.time = new Date(0);
-				this.time.setUTCSeconds(message.createdTimestamp);
+				this.time = new Date(message.createdTimestamp);
 
 				this.attachments = new Array();
 
@@ -37,6 +46,22 @@ class MessageStructure {
 						this.attachments.push(key.url);
 				});
 		}
+}
+
+// Convert message into markdown
+// mS means messageStructure and its kinda hard to retype everytime lol ;p
+function convertMessageStructureIntoMarkdown(mS) {
+		let convertedMessage = `### ${mS.author.name}\n`+
+				`<img src="${mS.author.avatar}" width="128" height="128">\n\n`+
+				`##### ${mS.time}\n\n`+
+				`${mS.content}\n\n`+
+				`Attachments: \n\n`;
+
+		mS.attachments.forEach(perAttachment => {
+				convertedMessage += `<img src="${perAttachment}" height="400" width="400">\n`;
+		});
+
+		return convertedMessage+'***';
 }
 
 // Get message ID for the first time
@@ -50,13 +75,19 @@ function printAllMessages(channelId, before) {
 				limit: 100,
 				before: before
 		})
-		.then((message) => {
+		.then(message => {
 				let nextMessageID = '';
 
 				// Push to the array containing chat history
 				message.each((key, value) => {
 						// console.log(`${key.content} | ${key.author.username}#${key.author.discriminator} | ${key.id}`);
-						messageHistory.push(new MessageStructure(key));
+						const currentMessage = new MessageStructureInJSON(key);
+
+						if (config.export_type == "json")
+								messageHistory.push(currentMessage);
+						else if (config.export_type == "md")
+								messageHistory += convertMessageStructureIntoMarkdown(currentMessage) + '\n';
+
 						nextMessageID = key.id;
 				});
 
@@ -69,8 +100,9 @@ function printAllMessages(channelId, before) {
 
 				// Write to file
 				else {
-						fs.writeFile('messages.json', JSON.stringify(messageHistory,
-								null, 4), (err) => {
+						fs.writeFile(config.export_to, config.export_type === "json" ?
+								JSON.stringify(messageHistory,
+								null, 4) : messageHistory, (err) => {
 
 								if (err)
 										throw err;
