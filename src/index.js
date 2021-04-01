@@ -3,6 +3,7 @@
 // Major thanks to Crystal and Mishti who solved the rate limit problem for me
 
 const Discord = require('discord.js');
+const fs = require('fs');
 
 const Bot = new Discord.Client();
 const config = require('./config.json');
@@ -23,8 +24,15 @@ class MessageStructure {
 		constructor(message) {
 				this.author = new AuthorStructure(message);
 				this.content = message.content;
+
 				this.time = new Date(0);
 				this.time.setUTCSeconds(message.createdTimestamp);
+
+				this.attachments = new Array();
+
+				message.attachments.each((key, value) => {
+						this.attachments.push(key.url);
+				});
 		}
 }
 
@@ -52,13 +60,16 @@ function printAllMessages(channelId, before) {
 
 				if (nextMessageID != '') {
 						++recursionMeter;
-						console.log(recursionMeter);
+						console.log((recursionMeter*100), 'messages have been fetched');
 						printAllMessages(channelId, nextMessageID);
 				}
 
 				else {
-						messageHistory.forEach(perMessage => {
-								console.log(perMessage);
+						fs.writeFile('messages.json', JSON.stringify(messageHistory, null, 4), (err) => {
+								if (err)
+										throw err;
+
+								console.log('Messages are saved!');
 						});
 				}
 		})
