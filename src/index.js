@@ -30,6 +30,9 @@ class MessageStructure {
 
 				this.attachments = new Array();
 
+				// Something to be noticed: in Collection.each(), the roles of
+				// keys and values are reversed where as it would be the same
+				// in other cases.
 				message.attachments.each((key, value) => {
 						this.attachments.push(key.url);
 				});
@@ -49,23 +52,26 @@ function printAllMessages(channelId, before) {
 		})
 		.then((message) => {
 				let nextMessageID = '';
-				// Something to be noticed: in Collection.each(), the roles of
-				// keys and values are reversed where as it would be the same
-				// in other cases.
+
+				// Push to the array containing chat history
 				message.each((key, value) => {
 						// console.log(`${key.content} | ${key.author.username}#${key.author.discriminator} | ${key.id}`);
 						messageHistory.push(new MessageStructure(key));
 						nextMessageID = key.id;
 				});
 
+				// Do recursion
 				if (nextMessageID != '') {
 						++recursionMeter;
 						console.log((recursionMeter*100), 'messages have been fetched');
 						printAllMessages(channelId, nextMessageID);
 				}
 
+				// Write to file
 				else {
-						fs.writeFile('messages.json', JSON.stringify(messageHistory, null, 4), (err) => {
+						fs.writeFile('messages.json', JSON.stringify(messageHistory,
+								null, 4), (err) => {
+
 								if (err)
 										throw err;
 
