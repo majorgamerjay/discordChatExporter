@@ -15,6 +15,6 @@
   "author": "MajorGamerJay",
   "license": "MIT",
   "dependencies": {
-    "discord.js": "^12.5.1"
+    "discord.js": "^12.5.2"
   }
 }
