@@ -1,37 +1,63 @@
-## Welcome to GitHub Pages
+# discordChatExporter
+## majorgamerjay@protonmail.com
 
-You can use the [editor on GitHub](https://github.com/MajorGamerJay/discordChatExporter/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+<img src="https://i.imgur.com/CsbAhWt.png" align="right" width="400px">
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+***>tfw u cant export messages on discord***
 
-### Markdown
+This is a Discord chat exporter made in NodeJS. It supports exporting as *JSON* and *markdown* (for now). Configuration is simple and everything is in one `config.json` file. If you like this, consider contributing to this repository or sharing this to others.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+## How to use it
 
-```markdown
-Syntax highlighted code block
+This guide is aimed towards *nix users. For Windows users, you can use [Tyrrrz's DiscordChatExporter](https://github.com/Tyrrrz/DiscordChatExporter) or just change the file paths here to *windows style*.
 
-# Header 1
-## Header 2
-### Header 3
+### Requirements
 
-- Bulleted
-- List
+1. Node & NPM
+2. Bot token (account token is also possible if you know where to modify the discord.js code for account token ;) )
 
-1. Numbered
-2. List
+### Downloading and installing
 
-**Bold** and _Italic_ and `Code` text
+1. Clone this repository
+2. In the repository, execute `npm install`
 
-[Link](url) and ![Image](src)
+This should install discord.js and dependencies for it.
+
+### Configuring
+
+1. Copy `config_template.json` from root directory of the repository to `src/config.json`
+2. See the options and configure accordingly.
+
+```json
+{
+		"token": "<insert your token here>",
+		"channelID": "<insert channel id here>",
+		"export_type": "<json/md>",
+		"export_to": "output/messages.<json/md>"
+}
 ```
+In `export_type`, it should be either `json` or `md`.
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+It is recommended to put the export path (`export_to`) to be `output/<filename>` or outside the repository as this could make trouble with the repository itself.
 
-### Jekyll Themes
+### Using
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/MajorGamerJay/discordChatExporter/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+This should be done after it is configured properly or it will not work!
 
-### Support or Contact
+1. Change directory to `src`, `cd src`
+2. Make a directory called output, `mkdir output`
+3. Run `node index.js`
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+## Issues and PRs
+
+### Issues
+
+If you have any issues, feel free to open up one! I'll help as much as I can.
+
+###  Pull Requests
+
+Pull requests are welcomed. Just make sure the code is nice and readable. ;) (*even tho mine suckks*)
+
+## License
+
+This is under MIT License. Enjoy ;p
