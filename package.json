@@ -1,6 +1,6 @@
 {
   "name": "discord-chat-exporter",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "Discord chat exporter",
   "main": "index.js",
   "scripts": {
