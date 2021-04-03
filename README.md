@@ -45,7 +45,8 @@ It is recommended to put the export path (`export_to`) to be `output/<filename>`
 This should be done after it is configured properly or it will not work!
 
 1. Change directory to `src`, `cd src`
-2. Run `node index.js`
+2. Make a directory called output, `mkdir output`
+3. Run `node index.js`
 
 ## Issues and PRs
 
