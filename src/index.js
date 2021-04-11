@@ -23,7 +23,8 @@ if (config.export_type == "json") {
 }
 
 else {
-	console.log(`Export type: md`);
+	config.export_type == "md" ? console.log(`Export type: md`)
+	: console.log(`Export type: HTML`);
 	var messageHistory = '';
 }
 

@@ -13,12 +13,14 @@ class MessageStructureInJSON {
 		this.time = new Date(message.createdTimestamp);
 
 		this.attachments = new Array();
+		this.embeds = new Array();
 
-		// Something to be noticed: in Collection.each(), the roles of
-		// keys and values are reversed where as it would be the same
-		// in other cases.
 		message.attachments.each((key, value) => {
 			this.attachments.push(key.url);
+		});
+
+		message.embeds.forEach(perEmbed => {
+			this.embeds.push(perEmbed);
 		});
 	}
 }
