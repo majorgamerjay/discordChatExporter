@@ -1,5 +1,5 @@
 # discordChatExporter
-## majorgamerjay@protonmail.com
+## majorgamerjay@gmail.com
 
 <img src="https://i.imgur.com/CsbAhWt.png" align="right" width="400px">
 
